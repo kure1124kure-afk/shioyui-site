@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>潮結国</title>
+
+<link rel="icon" type="image/png" sizes="16x16" href="images/shioyui.png">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+/* ===========================
+   ナビ
+=========================== */
+.icon{max-width:3%;}
+.space-x-6{margin:0 100px}
+.space-x-6 a{margin:25px !important}
+
+/* ===========================
+   背景（海霧神域）
+=========================== */
+.character-section{
+  position:relative;
+  overflow:hidden;
+  background-image:url('images/sea-mist.jpg');
+  background-size:cover;
+  background-attachment:fixed;
+  background-position:center;
+}
+
+.character-section::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 40%, rgba(201,161,59,.35), transparent 60%);
+  animation:mistPulse 5s ease-in-out infinite;
+  pointer-events:none;
+  z-index:1;
+}
+
+@keyframes mistPulse{
+  0%,100%{opacity:.3}
+  50%{opacity:.7}
+}
+
+/* ===========================
+   漂う結びの光粒
+=========================== */
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#c9a13b;
+  border-radius:50%;
+  opacity:.4;
+  animation:floatUp linear infinite;
+  z-index:2;
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0);opacity:0}
+  30%{opacity:.5}
+  100%{transform:translateY(-120vh);opacity:0}
+}
+
+/* ===========================
+   テキストブロック
+=========================== */
+.story-box{
+  background:rgba(20,35,45,.65);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(201,161,59,.3);
+  box-shadow:0 0 40px rgba(201,161,59,.15);
+  padding:2rem;
+  border-radius:20px;
+  max-width:950px;
+  color:#e5e7eb;
+  line-height:1.9;
+  position:relative;
+  z-index:3;
+}
+
+.story-box h2{
+  font-size:30px;
+  margin-bottom:0.5rem;
+  color:#f6e7c1;
+  letter-spacing:.0.5em;
+  font-style:unset;
+}
+
+.story-box blockquote{
+  border-left:4px solid #c9a13b;
+  padding-left:1rem;
+  font-style:italic;
+  color:#f6e7c1;
+}
+
+/* ===========================
+   立ち絵
+=========================== */
+.character-img img{
+  max-height:80vh;
+  filter:drop-shadow(0 0 25px rgba(0,0,0,.7));
+  position:relative;
+  z-index:3;
+}
+
+nav a{
+  color:#e6d3a3;
+  font-weight:500;
+  letter-spacing:0.15em;
+  transition:all .3s ease;
+}
+
+nav a:hover{
+  color:#f6e7c1;
+  text-shadow:0 0 8px rgba(201,161,59,.6);
+}
+
+body{
+  margin:0;
+  background:#0a141c;
+  color:white;
+  font-family:serif;
+  background-image:url('images/sioyui.png');
+  background-size:cover;
+  background-position:center;
+}
+
+blockquote{
+  font-size:17px;
+  margin-bottom:0.5rem;
+  color:#f6e7c1;
+  letter-spacing:.0.5em;
+  font-style:unset;
+}
+
+.md\:flex-row {
+  margin-bottom: 50px;
+}
+
+.character-wrapper {
+  position: relative;
+  width: 500px; /* 立ち絵サイズに合わせて */
+}
+
+.character {
+  width: 100%;
+  display: block;
+}
+
+/* 胸元の紙エリア */
+.paper-trigger {
+  position: absolute;
+  top: 174px;
+  left: 274px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* 光エフェクト */
+.paper-trigger.glow {
+  animation: glowEffect 0.4s ease-out forwards;
+}
+
+@keyframes glowEffect {
+  0% {
+    box-shadow: 0 0 0px rgba(255,255,200,0);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255,255,200,0.9);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(255,255,200,0.4);
+  }
+}
+
+/* モーダル */
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  transition: opacity 0.4s ease;
+  z-index: 4 !important;
+}
+
+.modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #111;
+  background-image:url('images/texstia/washi.png');
+  background-size:cover;
+  background-position:center;
+  color: rgb(0, 0, 0);
+  padding: 50px;
+  line-height: 1.6;
+  width: 100%;          /* 幅を広げる */
+  max-width: 1000px;    /* 最大幅 */
+  max-height: 90vh;    /* 高さを画面内に収める */
+  margin: 5% auto;
+  margin-top: 10%;
+  border: 1px solid #888;
+  overflow-y: auto;    /* 長文や画像がはみ出てもスクロール可能 */
+  border-radius: 15px;
+  white-space: normal;
+  z-index: 5 !important;
+
+  display: block;          
+  flex-direction: row;    
+}
+
+.modal-content blockquote {
+  margin: 1rem 0;
+  padding-left: 1rem;
+  border-left: 4px solid #125777;
+  font-style: italic;
+  color:#125777;
+}
+
+.modal-content h2{
+  font-size:30px;
+  margin-bottom:0.5rem;
+  color:#125777;
+  letter-spacing:.0.5em;
+  font-style:unset;
+}
+
+.modal-content p {
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.modal-text {
+  flex: 1;
+  overflow-y: auto;
+  color: #0a141c;
+  min-width: 0;
+}
+
+/* 右カラム：立ち絵 */
+.modal-image {
+  flex: 0 0 250px; 
+}
+
+/* モーダル内の画像 */
+.modal-content img {
+    max-height: 80vh;
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.7));
+    position: relative;
+    padding-bottom: 50px;
+    z-index: 3;
+}
+
+/* 画面が狭い場合は縦並びに切り替え */
+@media(max-width: 768px){
+  .modal-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .modal-image {
+    flex: 1 1 auto;
+    width: 80%;
+    margin-bottom: 20px;
+  }
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+.paper-trigger:hover {
+  box-shadow: 0 0 15px rgba(255,255,200,0.6); 
+}
+
+/* ===========================
+   📱 MOBILE OPTIMIZATION
+=========================== */
+@media (max-width: 768px){
+
+  /* ===== HEADER ===== */
+  header{
+    padding:12px 16px;
+  }
+
+  .icon{
+    max-width:40px; /* %やめる */
+  }
+
+  .space-x-6{
+    margin:0;
+  }
+
+  .space-x-6 a{
+    margin:0 10px !important;
+    font-size:14px;
+  }
+
+  /* ===== SECTION余白 ===== */
+  .character-section{
+    padding-top:120px;
+  }
+
+  /* ===== 2カラム縦並び ===== */
+  .character-section .flex{
+    flex-direction:column;
+    gap:40px;
+  }
+
+  /* ===== 立ち絵 ===== */
+  .character-wrapper{
+    width:90%;
+    max-width:350px;
+  }
+
+  .character-img img,
+  .character{
+    max-height:60vh;
+  }
+
+  /* 紙クリック位置を%に補正 */
+  .paper-trigger{
+    top:19%;
+    left:60%;
+    width:15%;
+    height:10%;
+  }
+
+  .paper-trigger:hover {
+  box-shadow: 0 0 15px rgba(255,255,200,0.6); 
+  }
+
+
+  /* ===== テキスト ===== */
+  .story-box{
+    padding:1.5rem;
+    font-size:15px;
+    line-height:1.8;
+  }
+
+  .story-box h2{
+    font-size:24px;
+    letter-spacing:.2em;
+  }
+
+  /* ===== モーダル ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+
+  overflow-y:auto;
+  -webkit-overflow-scrolling: touch; 
+  touch-action:auto;
+}
+
+/* 表示状態 */
+  .modal.active{
+    display:block;
+  }
+
+  /* 中身 */
+  .modal-content{
+    background-image:url('images/texstia/washi.png');
+    background-size:cover;
+    background-position:center;
+    max-width:800px;
+    width:90%;
+    margin:80px auto; /* 上下余白 */
+    padding:30px;
+
+    /* ★ これも重要 */
+    max-height:85vh;
+    overflow-y:auto;
+
+    padding:20px;
+    margin-top:20%;
+  }
+
+  .modal-content h2{
+    font-size:22px;
+  }
+
+  .modal-text{
+    font-size:14px;
+  }
+
+  .modal-image img{
+    max-height:50vh;
+  }
+
+} 
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" autoplay loop src="music/あゝ、潮ノ原.mp3"></audio>
+
+<!-- ================= HEADER ================= -->
+<header class="fixed top-0 left-0 w-full z-50
+bg-gradient-to-r from-[#0f1a24]/90 via-[#1c2a33]/80 to-[#0f1a24]/90
+backdrop-blur-md
+border-b border-yellow-700/40
+p-4 flex justify-between items-center shadow-lg">
+  <img src="images/shioyui.png" class="icon">
+  <nav class="space-x-6">
+    <a href="index.html">潮結</a>
+    <a href="characters.html">人物</a>
+    <a href="history.html">歴史</a>
+    <a href="story.html">物語</a>
+  </nav>
+</header>
+
+<!-- CHARACTER SECTION -->
+<section class="character-section min-h-screen pt-32 px-6 flex items-center">
+
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-center relative z-10">
+
+  <!-- TEXT -->
+  <div class="md:w-7/8 story-box">
+
+    <h2>岳原一誠</h2>
+
+    <p>
+      岳原一誠は穏やかな眼差しと落ち着いた声を持つ、潮結議会の総議長である。<br>
+      白髪混じりの髪を丁寧に撫でつけ、常に端正な和装または簡素な礼装を纏うその姿は、激情とは無縁の人物のように映る。<br>
+      壇上に立っても声を張り上げることはなく、静かな語り口で言葉を重ねる。<br><br>
+    
+      怒号が飛び交う議場においても、彼は決して声を荒らげない。<br>
+      ゆっくりと相手の主張を聞き、わずかに目を閉じてから応じる。<br>
+      その間の取り方こそが彼の武器であり、対立する双方に「まだ話せる」という感覚を与える。<br><br>
+
+      国民からは「安心の象徴」「均衡の番人」と呼ばれる。<br>
+      熱狂を生む指導者ではないが、混乱を鎮める存在として強い信頼を集めている。<br><br>
+
+      彼の言葉は理想を煽るものではなく、現実を整えるものだ。<br><br>
+
+      <blockquote>「急ぐ国家は転ぶ。歩幅を揃えれば、遠くへ行ける。」</blockquote><br>
+
+      その姿勢は一貫している。<br>
+      改革を否定せず、保守も切り捨てない。<br>
+      常に“中央”に立ち続ける。<br><br>
+
+      公務では資料に細かく目を通し、数字や条文を正確に把握する実務型。<br>
+      若手議員に対しても叱責より助言を選び、感情よりも秩序を優先する。<br>
+      議会閉会後も最後まで議場に残り、静かに机を整える姿がしばしば目撃されている。<br><br>
+
+      近年は老いが進み、歩みはやや遅くなった。<br>
+      しかし演壇に立てば、その声はなお安定している。<br>
+      派閥が揺れるとき、必ず彼の名が挙がる。<br><br>
+
+      柔和な微笑の奥に、長年政界に立ち続けてきた重みを宿す。<br>
+      熱狂を生まぬ代わりに、秩序を保つ。<br><br>
+
+      岳原一誠は、嵐の中で灯を消さぬ者である。<br>
+    </p>
+
+    <!-- STATUS -->
+    <div class="grid grid-cols-2 gap-4 mt-6 text-sm text-gray-300">
+      <div>年齢：72</div>
+      <div>身長：168cm</div>
+      <div>出身地：陽丘市・旧港区</div>
+      <div>役職：総議長</div>
+    </div>
+
+  </div>
+
+  <!-- IMAGE -->
+  <div class="md:w-1/2 flex justify-center character-wrapper">
+    <img src="images/岳原一誠.png" alt="岳原一誠" class="character">
+
+    <!-- 胸元の紙クリックエリア -->
+  <div class="paper-trigger" onclick="openShiki()"></div>
+  </div>
+
+    <div id="shikiModal" class="modal">
+<div class="modal-content flex flex-row gap-6">
+
+    <span class="close" onclick="closeShiki()">&times;</span>
+
+    <!-- 立ち絵 -->
+    <div class="modal-image">
+      <img src="images/囚人服_full.png" alt="志記">
+    </div>
+
+    <!-- 文章 -->
+    <div class="modal-text">
+      <h2>志記</h2>
+      <p>
+        黒髪でやや痩せ型、身長・筋力とも控えめな体格。<br>
+        顔には神代から贈られた眼帯をお守り代わりにつけているが、片目は問題なく視認可能。
+      <p>
+        静かに佇むだけではほとんど存在感がなく、所作や視線は計算され尽くした落ち着きと威厳を湛える。<br>
+        国民や議会、メディアにはほぼ知られておらず、彼の行動や意志は影に潜み、表舞台には姿を現さない。<br>
+        その存在を認知しているのは、諜報部隊や数少ない補佐役のみ。必要な時にだけ情報を伝え、指示を受け取る。</p>
+      <p>
+        言葉や思考は激情に流されず、常に論理と戦略に基づく。<br>
+        国家の意思決定、諜報活動、政治操作を裏から支え、表に出ることなく成果を実現する。<br>
+        刀を帯刀し、弾切れを起こさぬ武器として、また生への抵抗と象徴として大切に扱う。</p>
+      <p>
+        幼少期、家族に捨てられ、神代隼人に拾われた経験を持つ。<br>
+        成長と進化こそが生きる糧と信じ、個人の利益や名声よりも国家の動きを静かに整えることを使命とする。<br>
+        戦略や計画は表には出ず、必要に応じて他者や組織を通して実行されるため、成功の影には必ず彼の手があるが、直接感謝されることはない。</p>
+
+      <p>台詞や思想は、内部文書や限られた補佐役の耳にのみ届く</p>
+
+      <blockquote>「成長を止めた者に、未来はない。」</blockquote>
+      <p>
+        彼の目的は明確だ。国を動かし、古い秩序や不合理を整理し、未来を確実に進めること。<br>
+        影に潜む存在として、志記は常に国家の裏舞台で光を放ち続ける。</p>
+
+       
+    </div>
+  </div>
+  </div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#0f1a24] py-8 text-center text-gray-400">
+© 2026 Shioyui Republic
+</footer>
+
+<!-- 光粒 -->
+<script>
+for(let i=0;i<30;i++){
+  const p=document.createElement('div');
+  p.classList.add('particle');
+  p.style.left=Math.random()*100+"%";
+  p.style.bottom="-20px";
+  p.style.animationDuration=(Math.random()*10+8)+"s";
+  p.style.animationDelay=Math.random()*5+"s";
+  document.body.appendChild(p);
+}
+
+/* BGM */
+const links = document.querySelectorAll('nav a[data-page]');
+    const pages = document.querySelectorAll('.page');
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const pageId = link.getAttribute('data-page');
+
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById(pageId).classList.remove('hidden');
+
+        // optional: URLも更新
+        window.history.pushState({page: pageId}, '', pageId+'.html');
+      });
+    });
+
+    // 戻る/進むに対応
+    window.addEventListener('popstate', e => {
+      if(e.state && e.state.page){
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById(e.state.page).classList.remove('hidden');
+      }
+    });
+
+    // BGMボリューム
+    const bgm = document.getElementById('bgm');
+    bgm.volume = 0.2;
+    bgm.play();
+
+ const paper = document.querySelector(".paper-trigger");
+
+paper.addEventListener("click", function () {
+  // 光らせる
+  paper.classList.add("glow");
+
+  // 0.4秒後にモーダル表示
+  setTimeout(() => {
+    document.getElementById("shikiModal").classList.add("active");
+    paper.classList.remove("glow");
+  }, 400);
+});
+
+// モーダル閉じる
+function closeShiki() {
+  document.getElementById("shikiModal").classList.remove("active");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>潮結国</title>
+
+<link rel="icon" type="image/png" sizes="16x16" href="images/shioyui.png">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+/* ===========================
+   ナビ
+=========================== */
+.icon{max-width:3%;}
+.space-x-6{margin:0 100px}
+.space-x-6 a{margin:25px !important}
+
+nav a{
+  color:#e6d3a3;
+  font-weight:500;
+  letter-spacing:0.15em;
+  transition:all .3s ease;
+}
+
+nav a:hover{
+  color:#f6e7c1;
+  text-shadow:0 0 8px rgba(201,161,59,.6);
+}
+
+/* ===========================
+   背景
+=========================== */
+body{
+  margin:0;
+  background:#0a141c;
+  color:white;
+  font-family:serif;
+}
+
+/* ===========================
+   セクション背景
+=========================== */
+.history-section{
+  background-image:url('images/thumb-1920-911883.jpg');
+  background-size:cover;
+  background-attachment:fixed;
+  background-position:center;
+  position:relative;
+}
+
+.history-section::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 40%, rgba(28, 83, 185, 0.35), transparent 60%);
+  animation:firePulse 3s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes firePulse{
+  0%,100%{opacity:.3;}
+  50%{opacity:.7;}
+}
+
+/* ===========================
+   タイムラインカード
+=========================== */
+.story-text{
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(28, 161, 185, 0.3);
+  box-shadow:0 0 25px rgba(28, 161, 185, 0.3);
+  line-height:1.8;
+}
+
+.story-text h3{
+  color:#717ff8;
+}
+
+.story-text blockquote{
+  border-left:4px solid #1c7ab9;
+  padding-left:1rem;
+  font-style:italic;
+  color:#717ff8;
+}
+
+footer{
+  background:#000;
+}
+
+.text-2xl {
+    font-size: 1.2rem !important;
+}
+
+/* ===========================
+   📱 MOBILE OPTIMIZATION
+=========================== */
+@media (max-width: 768px){
+
+  /* ===== HEADER ===== */
+  header{
+    padding:12px 16px;
+  }
+
+  .icon{
+    max-width:40px; /* %やめる */
+  }
+
+  .space-x-6{
+    margin:0;
+  }
+
+  .space-x-6 a{
+    margin:0 10px !important;
+    font-size:14px;
+  }
+
+  /* ===== HERO ===== */
+  .history-section{
+    background-attachment:scroll; /* iPhone固定背景バグ回避 */
+    padding-top:120px;
+  }
+
+  h1{
+    font-size:2rem !important;
+  }
+
+  /* ===== タイムライン縦並び最適化 ===== */
+  .history-section .flex{
+    flex-direction:column !important;
+    text-align:center;
+  }
+
+  .history-section .md\:w-1\/4,
+  .history-section .md\:w-3\/4{
+    width:100% !important;
+    padding:0 !important;
+  }
+
+  .history-section span{
+    display:block;
+    margin-bottom:10px;
+    font-size:1rem !important;
+  }
+
+  .story-text{
+    padding:1.2rem;
+    font-size:15px;
+  }
+
+  .story-text h3{
+    font-size:1.3rem !important;
+    margin-top: 15px;
+  }
+
+  .story-text img{
+    max-height:200px;
+    margin:20px auto 0;
+  }
+
+}
+
+</style>
+</head>
+
+<body class="font-serif text-white">
+
+<!-- ================= HEADER ================= -->
+<header class="fixed top-0 left-0 w-full z-50
+bg-gradient-to-r from-[#0f1a24]/90 via-[#1c2a33]/80 to-[#0f1a24]/90
+backdrop-blur-md
+border-b border-yellow-700/40
+p-4 flex justify-between items-center shadow-lg">
+  <img src="images/shioyui.png" class="icon">
+  <nav class="space-x-6">
+    <a href="index.html">潮結</a>
+    <a href="characters.html">人物</a>
+    <a href="history.html">歴史</a>
+    <a href="story.html">物語</a>
+  </nav>
+</header>
+
+<audio id="bgm" autoplay loop src="music/あゝ、潮ノ原.mp3"></audio>
+
+<!-- ================= HERO ================= -->
+<section class="history-section min-h-screen pt-32 pb-24 px-6">
+
+<div class="max-w-6xl mx-auto text-center mb-16 relative z-10">
+  <h1 class="text-5xl mb-4">潮結の歴史</h1>
+  <p class="text-gray-300 text-lg">
+    結びの国 ― 潮結二千年史
+  </p>
+</div>
+
+<div class="max-w-6xl mx-auto space-y-16 relative z-10">
+
+  <!-- 沿岸萌芽時代 -->
+  <div class="flex flex-col md:flex-row items-center">
+    <div class="md:w-1/4 text-right pr-8">
+      <span class="text-blue-400 text-2xl font-bold">紀元前十世紀〜紀元前六世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">沿岸萌芽時代</h3>
+      <p>
+        漁村から交易の芽が生まれ、<br>
+              結神思想の原型が形成される。
+      </p>
+      <img src="images/history/kigenzen_1.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+  <!-- 信仰統合時代 -->
+  <div class="flex flex-col md:flex-row-reverse items-center">
+    <div class="md:w-1/4 text-left pl-8">
+      <span class="text-blue-400 text-2xl font-bold">紀元前五世紀〜紀元前一世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">信仰統合時代</h3>
+      <p>
+        結神信仰が社会倫理となり、<br>
+          王政と秩序の基盤が築かれる。
+      </p>
+      <img src="images/history/kigenzen_2.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+   <!-- 交易拡張時代 -->
+  <div class="flex flex-col md:flex-row items-center">
+    <div class="md:w-1/4 text-right pr-8">
+      <span class="text-blue-400 text-2xl font-bold">一世紀〜五世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">交易拡張時代</h3>
+      <p>
+        鉄と海産物を武器に交易圏が拡大。<br>
+        物流国家の原型が整う。
+      </p>
+      <img src="images/history/seiki_1.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+   <!-- 抗争と制度化の時代 -->
+  <div class="flex flex-col md:flex-row-reverse items-center">
+    <div class="md:w-1/4 text-left pl-8">
+      <span class="text-blue-400 text-2xl font-bold">六世紀〜八世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">抗争と制度化の時代</h3>
+      <p>
+        潮隠の台頭と抗争。<br>
+        国家主導で信仰と秩序が制度化される。
+      </p>
+      <img src="images/history/seiki_2.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+  <!-- 文化整備時代 -->  
+  <div class="flex flex-col md:flex-row items-center">
+    <div class="md:w-1/4 text-right pr-8">
+      <span class="text-blue-400 text-2xl font-bold">九世紀〜十三世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">文化整備時代</h3>
+      <p>
+        戸籍・刃神那・共通語が整備され、<br>
+        道奉政治が成立する。
+      </p>
+      <img src="images/history/seiki_3.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+  <!-- 分裂と統一の時代 --> 
+  <div class="flex flex-col md:flex-row-reverse items-center">
+    <div class="md:w-1/4 text-left pl-8">
+      <span class="text-blue-400 text-2xl font-bold">十四世紀〜十六世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">分裂と統一の時代</h3>
+      <p>
+        外患と内乱が続き、<br>
+        統一戦乱を経て中央集権へ。
+      </p>
+      <img src="images/history/seiki_4.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+  <!-- 将軍統制時代 -->  
+  <div class="flex flex-col md:flex-row items-center">
+    <div class="md:w-1/4 text-right pr-8">
+      <span class="text-blue-400 text-2xl font-bold">十七世紀〜十八世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">将軍統制時代</h3>
+      <p>
+        安定と遮断、そして技術流入。
+      </p>
+      <img src="images/history/seiki_5.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+  <!-- 近代改革時代 --> 
+  <div class="flex flex-col md:flex-row-reverse items-center">
+    <div class="md:w-1/4 text-left pl-8">
+      <span class="text-blue-400 text-2xl font-bold">十九世紀</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">近代改革時代</h3>
+      <p>
+        議会制民主主義へ移行。
+      </p>
+      <img src="images/history/seiki_6.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+  <!-- 物流国家時代 -->  
+  <div class="flex flex-col md:flex-row items-center">
+    <div class="md:w-1/4 text-right pr-8">
+      <span class="text-blue-400 text-2xl font-bold">二十世紀〜現在</span>
+    </div>
+    <div class="md:w-3/4 p-6 rounded-xl story-text">
+      <h3 class="text-2xl mb-2">物流国家時代</h3>
+      <p>
+        鉄道と海運を柱に中立自衛国家として存続。
+      </p>
+      <img src="images/history/seiki_7.png" class="mt-4 rounded-lg shadow-lg max-h-64">
+    </div>
+  </div>
+
+</div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="py-8">
+  <div class="max-w-6xl mx-auto text-center text-gray-400">
+    © 2026 Nova Gallia Federation
+  </div>
+</footer>
+
+<!-- ================= JS ================= -->
+<script>
+/* BGM */
+const links = document.querySelectorAll('nav a[data-page]');
+    const pages = document.querySelectorAll('.page');
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const pageId = link.getAttribute('data-page');
+
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById(pageId).classList.remove('hidden');
+
+        // optional: URLも更新
+        window.history.pushState({page: pageId}, '', pageId+'.html');
+      });
+    });
+
+    // 戻る/進むに対応
+    window.addEventListener('popstate', e => {
+      if(e.state && e.state.page){
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById(e.state.page).classList.remove('hidden');
+      }
+    });
+
+    // BGMボリューム
+    const bgm = document.getElementById('bgm');
+    bgm.volume = 0.2;
+    bgm.play();
+</script>
+</script>
+
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy"
+content="default-src 'self';
+style-src 'self' 'unsafe-inline' https://www.gstatic.com;
+script-src 'self' 'unsafe-inline' 'unsafe-eval';
+img-src 'self' data: https:;
+media-src 'self';">
+<title>潮結国</title>
+
+<link rel="icon" type="image/png" sizes="16x16" href="images/shioyui.png">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+/* ===========================
+   ナビ
+=========================== */
+.icon{max-width:3%;}
+.space-x-6{margin:0 100px}
+.space-x-6 a{margin:25px !important}
+
+/* ===========================
+   背景（海霧パララックス）
+=========================== */
+.parallax{
+  background-image:url('images/sioyui.png');
+  background-attachment:fixed;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+}
+.parallax::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%,rgba(201,161,59,.35),transparent 60%);
+  animation:mistPulse 4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes mistPulse{
+  0%,100%{opacity:.3}
+  50%{opacity:.6}
+}
+
+/* ===========================
+   漂う光粒（結びの粒子）
+=========================== */
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#c9a13b;
+  border-radius:50%;
+  opacity:.4;
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0);opacity:0}
+  30%{opacity:.5}
+  100%{transform:translateY(-120vh);opacity:0}
+}
+
+body{
+  margin:0;
+  background:#0a141c;
+  color:white;
+  background-image:url('images/texstia/washi.png');
+  background-blend-mode:overlay;
+}
+
+h1{
+  font-size: 70px !important;
+  color: rgb(237, 245, 255);
+}
+
+nav a{
+  color:#e6d3a3;
+  font-weight:500;
+  letter-spacing:0.15em;
+  transition:all .3s ease;
+}
+
+nav a:hover{
+  color:#f6e7c1;
+  text-shadow:0 0 8px rgba(201,161,59,.6);
+}
+
+/* ===========================
+   📱 Mobile Optimization
+=========================== */
+@media (max-width: 768px){
+
+  /* ヘッダー */
+  header{
+    padding:12px 16px;
+  }
+
+  .icon{
+    max-width:40px; /* %やめる */
+  }
+
+  .space-x-6{
+    margin:0;
+  }
+
+  .space-x-6 a{
+    margin:0 10px !important;
+    font-size:14px;
+  }
+
+  /* HERO */
+  .parallax{
+    background-attachment:scroll; /* iOSバグ回避 */
+  }
+
+  h1{
+    font-size:42px !important;
+  }
+
+  h2{
+    font-size:26px !important;
+  }
+
+  .container{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .container img{
+    max-height:55vh;
+  }
+
+  /* STORY */
+  #story p{
+    font-size:15px;
+    line-height:1.8;
+  }
+
+  /* セクション共通 */
+  section{
+    padding-top:80px;
+    padding-bottom:80px;
+  }
+
+  /* grid縦並び強制 */
+  .grid{
+    grid-template-columns:1fr !important;
+  }
+
+  /* 画像 */
+  img{
+    max-width:100%;
+    height:auto;
+  }
+
+}
+</style>
+</head>
+
+<body class="font-serif text-white">
+
+<!-- ================= HEADER ================= -->
+<header class="fixed top-0 left-0 w-full z-50
+bg-gradient-to-r from-[#0f1a24]/90 via-[#1c2a33]/80 to-[#0f1a24]/90
+backdrop-blur-md
+border-b border-yellow-700/40
+p-4 flex justify-between items-center shadow-lg">
+  <img src="images/shioyui.png" class="icon">
+  <nav class="space-x-6">
+    <a href="index.html">潮結</a>
+    <a href="characters.html">人物</a>
+    <a href="history.html">歴史</a>
+    <a href="story.html">物語</a>
+  </nav>
+</header>
+
+<audio id="bgm" autoplay loop src="music/あゝ、潮ノ原.mp3"></audio>
+
+<!-- ================= HERO ================= -->
+<section class="parallax h-screen flex items-center justify-center">
+<div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-6 relative z-10">
+
+<div class="md:w-1/2 flex justify-center">
+<img src="images/軍服_kakusi.png" class="max-h-[80vh] drop-shadow-lg">
+</div>
+
+<div class="md:w-1/2 text-center md:text-left mt-8 md:mt-0">
+<h2 class="text-4xl md:text-5xl mb-4 drop-shadow-md">
+結べば、ものも心も通じる<br class="hidden md:block">
+<h1>潮結</h1>
+</h2>
+<p class="text-lg md:text-xl text-gray-300 mb-6">
+すべては結び、結びは守る
+</p>
+<a href="#story" class="bg-yellow-700 px-6 py-3 rounded-lg hover:bg-yellow-500 transition">
+詳しく見る
+</a>
+</div>
+
+</div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section id="story" class="bg-gray-900 py-24 px-6">
+<div class="max-w-5xl mx-auto text-center">
+<h3 class="text-3xl mb-8">
+結神逸話 ― 結びのはじまり ―
+</h3>
+<p class="text-gray-300 leading-relaxed text-lg">
+遥か昔、海は怒りの潮で満ち、山は煙と火を吐いて天を焦がしていた。<br>
+互いを嫌い、交わることを拒んだその二つの大地の狭間に、人は暮らしていた。<br><br>
+
+潮は田を呑み、火は森を裂いた。<br>
+人は海を畏れ、山を憎み、ただ耐えるしかなかった。<br><br>
+
+だがあるとき、人々は気づいた。<br>
+山の火の燃え殻が、海の塩を乾かし、塩が命を守ることを。<br>
+海の貝がらが山の水に混ざり、石を柔らかくし、土を肥やすことを。<br><br>
+
+対立しているはずのものが、<br>
+実は互いを支えていた。<br><br>
+
+やがて一人の老いた女が、村中の裂けた布や古い網、<br>
+千切れた漁綱や朽ちかけた麻紐を集め、一本の長い縄を編み始めた。<br><br>
+
+昼も夜も、ただ静かに編み続けた。<br><br>
+
+その縄は、波と木々の間を這い、<br>
+浜と山を、村と村を、やがて人と人を結んだ。<br><br>
+
+「これを結べば、ものも心も通じよう」<br><br>
+
+老女の声は小さかったが、<br>
+その言葉は風に乗り、谷を越えた。<br><br>
+
+縄を手にした者たちが互いに荷を渡し、<br>
+塩と薪を分け合ったその日、<br>
+風が吹いた。<br><br>
+
+雲がゆるやかにほどけ、また編まれ、<br>
+空に淡い虹がかかった。<br><br>
+
+それが、結神の声だったという。<br><br>
+
+老女の姿はその後、どこにもなかった。<br>
+海へ消えたとも、山へ帰ったとも言われる。<br>
+あるいは最初から人ではなかったのだと。<br><br>
+
+だが縄は残った。<br><br>
+
+浜の子と山の子は出会い、小道を拓いた。<br>
+嵐の夜、老女の縄を肩に巻き、<br>
+物資を運んだ若者がいた。<br><br>
+
+荷が重く、船が沈みかけたとき、<br>
+結ばれていた縄が淡く光り、<br>
+荒れた波が静かに引いた。<br><br>
+
+こうして結ばれた道は<br>
+「結びの路（むすびのみち）」と呼ばれた。<br><br>
+
+その路は、やがて浜と山を貫き、<br>
+塩と鉄を運び、<br>
+人の営みを絶やさぬ血流となった。<br><br>
+
+今もなお、潮結の地に走る道や鉄路は、<br>
+あの縄の延長であるという。<br><br>
+
+そしてその道に立つ者たちは、<br>
+知らず知らずのうちに、<br>
+結神の加護のもとにあると語り継がれている。<br>
+</p>
+</div>
+</section>
+
+<!-- ================= BELIEF ================= -->
+<section id="belief" class="bg-[#0f1a24] py-24 px-6 relative">
+<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+<img src="images/introduction/kidouno.png" class="rounded-xl shadow-2xl">
+<div class="backdrop-blur-md bg-[#1a2630]/60
+p-10 rounded-2xl
+border border-[#c9a13b]/30
+shadow-[0_0_30px_rgba(201,161,59,.15)]">
+<h3 class="text-3xl mb-4">軌道の丘 ― きどうのおか</h3>
+<p class="text-gray-300">
+軌道の丘は、首都・陽丘の中心に位置する円形の高台広場であり、国家の象徴的空間とされている。<br>
+丘の周囲を巡る鉄路は都市へと放射状に伸び、その姿は天より見れば一つの“結び”を描く。<br>
+国家記念式典や慰霊祭、物流安全祈願祭がここで執り行われ、潮結の理念はこの丘から各地へと流れ出していく。<br>
+</p>
+</div>
+</div>
+</section>
+
+<!-- ================= LEGACY ================= -->
+<section id="belief" class="bg-[#0f1a24] py-24 px-6 relative">
+<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+<img src="images/introduction/yuitetu.png" class="rounded-xl shadow-2xl">
+<div class="backdrop-blur-md bg-[#1a2630]/60
+p-10 rounded-2xl
+border border-[#c9a13b]/30
+shadow-[0_0_30px_rgba(201,161,59,.15)]">
+<h3 class="text-3xl mb-4">結鉄 ― ゆいてつ</h3>
+<p class="text-gray-300">
+結鉄は内陸鉱山から産出される潮結特有の鉄資源であり、国家基盤を支える象徴的素材である。<br>
+加工性と強度に優れ、鉄道レールや発電設備、さらには伝統的刀剣の鍛造にも用いられてきた。<br>
+その冷たい光沢は「国を結ぶ力」の具現とされ、潮結の発展と共に歩んできた。<br>
+</p>
+</div>
+</div>
+</section>
+
+<!-- ================= LEGACY ================= -->
+<section id="belief" class="bg-[#0f1a24] py-24 px-6 relative">
+<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+<img src="images/introduction/yuigamiseinkou.png" class="rounded-xl shadow-2xl">
+<div class="backdrop-blur-md bg-[#1a2630]/60
+p-10 rounded-2xl
+border border-[#c9a13b]/30
+shadow-[0_0_30px_rgba(201,161,59,.15)]">
+<h3 class="text-3xl mb-4">結神信仰 ― むすびがみしんこう</h3>
+<p class="text-gray-300">
+結神信仰は、特定の人格神を持たぬ概念的信仰体系であり、「結ぶ力」そのものを神格化する思想である。<br>
+人と人、海と山、思想と国家を繋ぐ力を尊び、その流れを絶やさぬことを徳とする。<br>
+この信仰は政治や産業とも静かに結びつき、潮結という国家の精神的基盤を形作っている。<br>
+</p>
+</div>
+</div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-black bg-opacity-80 py-8">
+<div class="max-w-6xl mx-auto text-center text-gray-300">
+© 2026 Shioyui Republic
+</div>
+</footer>
+
+<!-- ================= JS ================= -->
+<script>
+/* 漂う粒子 */
+for(let i=0;i<25;i++){
+  const p=document.createElement('div');
+  p.classList.add('particle');
+  p.style.left=Math.random()*100+"%";
+  p.style.bottom="-20px";
+  p.style.animationDuration=(Math.random()*10+8)+"s";
+  p.style.animationDelay=Math.random()*5+"s";
+  document.body.appendChild(p);
+}
+
+/* BGM */
+const links = document.querySelectorAll('nav a[data-page]');
+    const pages = document.querySelectorAll('.page');
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const pageId = link.getAttribute('data-page');
+
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById(pageId).classList.remove('hidden');
+
+        // optional: URLも更新
+        window.history.pushState({page: pageId}, '', pageId+'.html');
+      });
+    });
+
+    // 戻る/進むに対応
+    window.addEventListener('popstate', e => {
+      if(e.state && e.state.page){
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById(e.state.page).classList.remove('hidden');
+      }
+    });
+
+    // BGMボリューム
+    const bgm = document.getElementById('bgm');
+    bgm.volume = 0.2;
+    bgm.play();
+</script>
+
+</body>
+</html>
