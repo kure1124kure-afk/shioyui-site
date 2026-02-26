@@ -1,0 +1,63 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+<main class="mt-24">
+  <section id="home" class="page active flex flex-col items-center justify-center min-h-screen bg-black text-white">
+  <h1 class="text-4xl font-serif mb-6 drop-shadow-lg">Home</h1>
+    <!-- 軍歌BGM -->
+    <audio id="armyBGM" controls loop src="music/Secret_Talk_2.mp3"class="w-80 rounded-lg bg-black text-white">
+      Your browser does not support the audio element.
+    </audio>
+
+  <button id="playArmy" class="bg-red-800 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
+    ▶ 再生
+  </button>
+  <button id="pauseArmy" class="bg-gray-700 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition">
+    ■ 停止
+  </button>
+</div>
+  </section>
+
+  <section id="characters" class="page hidden">
+    <h1>Characters</h1>
+  </section>
+
+  <section id="history" class="page hidden">
+    <h1>History</h1>
+  </section>
+  <script>
+    const pages = document.querySelectorAll('.page');
+const links = document.querySelectorAll('.nav-link');
+
+// ページ切替
+links.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = link.dataset.page;
+
+    pages.forEach(p => p.classList.add('hidden'));
+    pages.forEach(p => p.classList.remove('active'));
+
+    const activePage = document.getElementById(target);
+    activePage.classList.remove('hidden');
+    activePage.classList.add('active');
+
+    history.pushState({page: target}, '', target);
+  });
+});
+
+// ブラウザ戻る対応
+window.addEventListener('popstate', e => {
+  const page = e.state?.page || 'home';
+  pages.forEach(p => p.classList.add('hidden'));
+  pages.forEach(p => p.classList.remove('active'));
+  const activePage = document.getElementById(page);
+  activePage.classList.remove('hidden');
+  activePage.classList.add('active');
+});
+
+// 軍歌ボタン
+const bgm = document.getElementById('armyBGM');
+document.getElementById('playArmy').addEventListener('click', () => bgm.play());
+document.getElementById('pauseArmy').addEventListener('click', () => bgm.pause());
+  </script>
+</main>
